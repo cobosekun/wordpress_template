@@ -400,7 +400,7 @@ if [ "$WEB_SERVER_CHOICE" = "1" ]; then
     echo -e "${GREEN}ブラウザで http://localhost:8000 にアクセスしてください${NC}\n"
     echo -e "${BLUE}========================================${NC}\n"
     
-    # PHP内蔵サーバーを起動（ログ出力あり）
+    # PHP内蔵サーバーを起動(ログ出力あり)
     php -S localhost:8000
     
     # サーバー停止後のメッセージ
@@ -607,7 +607,7 @@ elif [ "$WEB_SERVER_CHOICE" = "3" ]; then
     echo -e "1. Nginxを再起動: ${GREEN}sudo systemctl restart nginx${NC}"
     echo -e "2. ブラウザで ${GREEN}$SITE_URL${NC} にアクセス"
 else
-    echo -e "1. Webサーバー（Apache/Nginx）を設定してください"
+    echo -e "1. Webサーバー(Apache/Nginx)を設定してください"
     echo -e "2. ブラウザで ${GREEN}$SITE_URL${NC} にアクセス"
     echo -e "   または PHP内蔵サーバーを起動: ${GREEN}php -S localhost:8000${NC}"
 fi
