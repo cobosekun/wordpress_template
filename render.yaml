@@ -32,4 +32,4 @@ databases:
   - name: wordpress-db
     databaseName: wordpress
     user: wordpress
-    plan: starter  # 無料プラン
+    plan: free  # 無料プラン
