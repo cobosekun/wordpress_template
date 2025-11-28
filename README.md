@@ -2,6 +2,68 @@
 
 WordPressのベアメタル環境をCLIで簡単にセットアップできるスクリプトを用意しました。
 
+## 🚀 クイックスタート
+
+### 1. スクリプトに実行権限を付与
+
+```bash
+chmod +x setup.sh install-wordpress.sh
+```
+
+### 2. 完全自動インストールを実行（推奨）
+
+```bash
+./install-wordpress.sh
+```
+
+対話形式で質問に答えるだけで、WordPressの完全なベアメタル環境が構築されます。
+
+---
+
+## ⚠️ 事前準備
+
+スクリプトを実行する前に、以下がインストールされている必要があります：
+
+### 必須ソフトウェア
+
+```bash
+# macOS の場合（Homebrew使用）
+brew install mysql
+brew install php
+brew install apache2  # または nginx
+
+# MySQL の起動
+brew services start mysql
+
+# 初回セットアップ（rootパスワード設定）
+mysql_secure_installation
+```
+
+```bash
+# Ubuntu/Debian の場合
+sudo apt update
+sudo apt install mysql-server php apache2
+sudo apt install php-mysql php-curl php-gd php-mbstring php-xml php-zip
+
+# MySQL の起動
+sudo systemctl start mysql
+sudo systemctl enable mysql
+
+# 初回セットアップ
+sudo mysql_secure_installation
+```
+
+### スクリプトの動作確認
+
+スクリプトは以下を自動的にチェックします：
+- MySQLのインストール状況
+- MySQLサーバーの起動状態
+- WP-CLIの有無（なければインストールを提案）
+
+未インストールの場合、インストール方法が表示され、スキップして続行することも可能です。
+
+---
+
 ## 利用可能なスクリプト
 
 ### 1. `setup.sh` - 基本セットアップスクリプト
@@ -66,6 +128,49 @@ chmod +x install-wordpress.sh
 
 ---
 
+## 📋 スクリプト実行の流れ
+
+### `install-wordpress.sh` の実行フロー
+
+1. **既存インストール確認**
+   - 既存のWordPressがあれば確認を求める
+
+2. **WP-CLIチェック**
+   - インストールされていなければインストールを提案
+
+3. **MySQLチェック（重要）**
+   - MySQLがインストールされているか確認
+   - MySQLサーバーが起動しているか確認
+   - 未起動の場合、起動方法を表示
+   - インストールされていない場合、インストール方法を表示
+
+4. **データベース情報入力**
+   - データベース名、ユーザー、パスワード等を入力
+   - すべての項目に入力例が表示されます
+
+5. **データベース作成**
+   - MySQLのrootパスワードを入力
+   - データベースとユーザーを自動作成
+   - 失敗しても続行可能（後で手動設定）
+
+6. **WordPress設定**
+   - wp-config.phpの自動作成
+   - セキュリティキーの自動生成
+   - セキュリティ設定の追加
+
+7. **WordPressインストール**
+   - WP-CLI経由で自動インストール（WP-CLIがある場合）
+   - 日本語パッケージの自動インストール
+
+8. **Webサーバー設定**
+   - Apache または Nginx の設定ファイルを自動生成
+   - 設定の有効化方法を表示
+
+9. **完了**
+   - アクセスURL、管理者情報を表示
+
+---
+
 ## クイックスタート
 
 ### 最小構成での実行
@@ -117,6 +222,12 @@ chmod +x install-wordpress.sh
 - **推奨デフォルト値**: yesが推奨の質問は [y] がデフォルト
 - **色付き出力**: 成功(緑)、警告(黄)、エラー(赤)で視認性向上
 - **自動パスワード生成**: 管理者パスワード未入力時は自動生成
+- **エラー回復**: MySQLエラー時もスキップして続行可能
+
+### 自動チェック機能
+- **MySQL確認**: インストール状態とサーバー起動を自動確認
+- **WP-CLI確認**: 未インストール時は自動でインストールを提案
+- **エラーハンドリング**: 各ステップでエラーが発生しても適切に対処
 
 ### Webサーバー自動設定
 - **Apache設定**: VirtualHost設定ファイル自動作成、mod_rewrite有効化
@@ -466,6 +577,39 @@ sudo yum install php php-mysqlnd php-curl php-gd php-mbstring php-xml php-zip
 ```
 
 ### Q: スクリプト実行中にエラーが出た場合は？
+
+**MySQLインストール・起動エラー:**
+```bash
+# macOS
+brew install mysql
+brew services start mysql
+mysql_secure_installation
+
+# Linux
+sudo apt install mysql-server
+sudo systemctl start mysql
+sudo mysql_secure_installation
+```
+
+**MySQL接続エラー (Can't connect to MySQL server):**
+```bash
+# MySQLが起動しているか確認
+# macOS
+brew services list | grep mysql
+
+# Linux
+sudo systemctl status mysql
+
+# 起動していない場合
+brew services start mysql  # macOS
+sudo systemctl start mysql  # Linux
+```
+
+**データベース作成エラー:**
+- スクリプトは続行可能です
+- 後で手動でデータベースを作成できます
+- 手順はエラーメッセージに表示されます
+
 - **データベース接続エラー**: データベース情報が正しいか確認
 - **パーミッションエラー**: `sudo` で実行するか、所有者を確認
 - **WP-CLIエラー**: `wp --info` でWP-CLIの状態を確認
