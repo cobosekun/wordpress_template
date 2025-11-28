@@ -34,6 +34,7 @@ brew install apache2  # または nginx
 
 # MySQL の起動
 brew services start mysql
+brew services start php
 
 # 初回セットアップ（rootパスワード設定）
 mysql_secure_installation
