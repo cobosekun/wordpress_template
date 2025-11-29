@@ -95,6 +95,7 @@ if ( ! defined( 'WP_DEBUG' ) ) {
 define('FORCE_SSL_ADMIN', false);
 define('WP_HOME', 'https://kind-essence-production-0e51.up.railway.app');
 define('WP_SITEURL', 'https://kind-essence-production-0e51.up.railway.app');
+define('WP_CONTENT_URL', 'https://kind-essence-production-0e51.up.railway.app/wp-content');
 
 /* That's all, stop editing! Happy publishing. */
 
