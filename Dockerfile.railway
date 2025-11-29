@@ -33,14 +33,6 @@ WORKDIR /var/www/html
 # WordPressファイルをコピー
 COPY --chown=www-data:www-data . /var/www/html/
 
-# Railway用のwp-config追加設定をプリペンド
-COPY wp-config-railway.php /tmp/wp-config-railway.php
-RUN if [ -f /var/www/html/wp-config.php ]; then \
-    sed -i '1d' /tmp/wp-config-railway.php && \
-    sed -i '1r /tmp/wp-config-railway.php' /var/www/html/wp-config.php && \
-    chown www-data:www-data /var/www/html/wp-config.php; \
-    fi
-
 # パーミッション設定
 RUN chown -R www-data:www-data /var/www/html \
     && find /var/www/html -type d -exec chmod 755 {} \; \

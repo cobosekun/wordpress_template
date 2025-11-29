@@ -29,12 +29,18 @@ if [ -f /var/www/html/wp-config.php ]; then
         echo "Required: MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE"
     fi
     
-    # WP_HOME と WP_SITEURL を環境変数で設定（wp-config.phpを直接編集しない）
+    # データベースのURLを直接更新（起動時に毎回実行）
     if [ ! -z "$RAILWAY_PUBLIC_DOMAIN" ]; then
         SITE_URL="https://$RAILWAY_PUBLIC_DOMAIN"
-        export WP_HOME="$SITE_URL"
-        export WP_SITEURL="$SITE_URL"
-        echo "WordPress URLs set via environment: $SITE_URL"
+        echo "Updating WordPress URLs in database to: $SITE_URL"
+        
+        # MySQLコマンドで直接更新
+        mysql -h "$MYSQLHOST" -P "$MYSQLPORT" -u "$MYSQLUSER" -p"$MYSQLPASSWORD" "$MYSQLDATABASE" << EOF
+UPDATE wp_options SET option_value = '$SITE_URL' WHERE option_name = 'siteurl';
+UPDATE wp_options SET option_value = '$SITE_URL' WHERE option_name = 'home';
+EOF
+        
+        echo "WordPress URLs updated in database"
     fi
 else
     echo "WARNING: wp-config.php not found!"
