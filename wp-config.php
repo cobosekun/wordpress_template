@@ -49,15 +49,15 @@ define( 'DB_COLLATE', '' );
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',          'xS@uxVvoRaT%&o[ewTgSP/U#SMa|MGP}y^Yop0eCP,#4MR+B^;5`q~/]+)7cmQM3' );
-define( 'SECURE_AUTH_KEY',   'pad;q8_jk,|YAcH-5y{v=@$^1VFyijCe}~oBOTd0>?QhlGH |U%jWo<*sH-X23|=' );
-define( 'LOGGED_IN_KEY',     ';4_u)O>Cp WJKdFhmC%c=<qiJ8k{RIiwNS]9p;fx3P*2u+OZX=PDND3=-sP.++8Y' );
-define( 'NONCE_KEY',         '*J)JS3<v*O3e 19N`}/[,15)HnWm?4a!V@Q4N>p]U]6//Q;%Q~MU1-(P6[;=Fzs/' );
-define( 'AUTH_SALT',         'U=sVFW_+NtAGs;U#d |SWwfl=;`!I82kPcS}if0N(O|nVMgZ|m<Ou]i/VY+TS4wP' );
-define( 'SECURE_AUTH_SALT',  'ieY*HS(FgoG3t-y7.saVmP4nLz;KSofu#s)<4kW$j8cimw8g,T;4k%yHLo}Z(;KX' );
-define( 'LOGGED_IN_SALT',    '1DnC;{KgG0-f{,5fP@xUDxXbaw*:^Z,(8_ana,iE17C8;mu_/lbl;(l[xg~(:J!O' );
-define( 'NONCE_SALT',        '-,*ns|rW8_Fm}rMaZQgwMVAWQ}^QD1oBMFnr;8OR.Qe31@@1*JLy E)63l~^o9bk' );
-define( 'WP_CACHE_KEY_SALT', '9B[IEzSHX+|dILyqhP=9Mi`8IRG:VCZR8Nc)S>#^SD<;q!cf$:A#WgN#`eBMLl|r' );
+define( 'AUTH_KEY',          '<xs:g]40*1MbTE]Mr4KGK_w4Z$I%(LPG}2Iq`V,.rB5oVbC?T5^ci|f:Yc5=_>a/' );
+define( 'SECURE_AUTH_KEY',   '&urjg[_,$[^7G]d2< A0HW@pz{AyvR1Cp}q(nt1=| R1S)E,SEAur!d;#Q MNr3z' );
+define( 'LOGGED_IN_KEY',     'U{4Xkok.yh^0;8(^<@$`,%6 *~_8[q[.eP?xpatkcMCId2zGvAj=TR;D];KVeQ-M' );
+define( 'NONCE_KEY',         'p+^zX]SBv[6Cc;cz~<7|{MnDNuE9*~:ue!+j|J(iS-y9:De V%qi]Z_Ei_gv&9UY' );
+define( 'AUTH_SALT',         'j*BQyW@Pk4q+KK,/x{v(%zN((P1AGM&*I[m(>5 _,dwCt`eXw}^|ChVIjln{_6+e' );
+define( 'SECURE_AUTH_SALT',  '.-i&po5]N{c<Ck6o&ibs*Bi0HX7YJp2d>R3Os}Z^m)-W,-*/YjAE+@LGczH=b(cs' );
+define( 'LOGGED_IN_SALT',    'C Q`ZC05x7/mih#FArm]li4rh_^V%QV3lgF:t2=L!(P_<FVhJj:;dWOYg[eCfkxx' );
+define( 'NONCE_SALT',        'A%w:Q@ZF3p;JGXT){Y>(7O,s~MxL-2Od% Ag1(Mh&&uiUNc. .57Ys3Jdb/F60z#' );
+define( 'WP_CACHE_KEY_SALT', 'h%`)/7)IG3rkd VETLB?7zv%iU6GWlM1T<:jlPEFH?xg4.a6-Khq5s_CqV7jb={;' );
 
 
 /**#@-*/
@@ -90,18 +90,6 @@ $table_prefix = 'wp_';
 if ( ! defined( 'WP_DEBUG' ) ) {
 	define( 'WP_DEBUG', false );
 }
-
-// Force HTTPS and disable redirects
-define('FORCE_SSL_ADMIN', false);
-define('WP_HOME', 'https://kind-essence-production-0e51.up.railway.app');
-define('WP_SITEURL', 'https://kind-essence-production-0e51.up.railway.app');
-define('WP_CONTENT_URL', 'https://kind-essence-production-0e51.up.railway.app/wp-content');
-
-// Cookie settings for Railway
-define('COOKIE_DOMAIN', 'kind-essence-production-0e51.up.railway.app');
-define('ADMIN_COOKIE_PATH', '/');
-define('COOKIEPATH', '/');
-define('SITECOOKIEPATH', '/');
 
 /* That's all, stop editing! Happy publishing. */
 
