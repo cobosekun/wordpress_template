@@ -9,3 +9,5 @@ if (getenv('RAILWAY_PUBLIC_DOMAIN')) {
         define('WP_SITEURL', $site_url);
     }
 }
+
+// 以下、元のwp-config.phpの内容
