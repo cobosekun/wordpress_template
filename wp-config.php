@@ -91,6 +91,11 @@ if ( ! defined( 'WP_DEBUG' ) ) {
 	define( 'WP_DEBUG', false );
 }
 
+// Force HTTPS and disable redirects
+define('FORCE_SSL_ADMIN', false);
+define('WP_HOME', 'https://kind-essence-production-0e51.up.railway.app');
+define('WP_SITEURL', 'https://kind-essence-production-0e51.up.railway.app');
+
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */
