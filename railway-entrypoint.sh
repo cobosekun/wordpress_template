@@ -29,13 +29,12 @@ if [ -f /var/www/html/wp-config.php ]; then
         echo "Required: MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE"
     fi
     
-    # WP_HOME と WP_SITEURL を設定
+    # WP_HOME と WP_SITEURL は設定しない（データベースに任せる）
+    # インストール後にWordPressが自動的にURLを設定する
     if [ ! -z "$RAILWAY_PUBLIC_DOMAIN" ]; then
         SITE_URL="https://$RAILWAY_PUBLIC_DOMAIN"
-        if ! grep -q "WP_HOME" /var/www/html/wp-config.php; then
-            sed -i "/define( 'DB_COLLATE'/a define( 'WP_HOME', '$SITE_URL' );\ndefine( 'WP_SITEURL', '$SITE_URL' );" /var/www/html/wp-config.php
-            echo "WordPress URL set to: $SITE_URL"
-        fi
+        echo "Site URL will be: $SITE_URL"
+        echo "WordPress will configure URLs automatically during installation"
     fi
 else
     echo "WARNING: wp-config.php not found!"
