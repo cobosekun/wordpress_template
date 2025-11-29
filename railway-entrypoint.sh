@@ -34,8 +34,8 @@ if [ -f /var/www/html/wp-config.php ]; then
         SITE_URL="https://$RAILWAY_PUBLIC_DOMAIN"
         echo "Updating WordPress URLs in database to: $SITE_URL"
         
-        # MySQLコマンドで直接更新
-        mysql -h "$MYSQLHOST" -P "$MYSQLPORT" -u "$MYSQLUSER" -p"$MYSQLPASSWORD" "$MYSQLDATABASE" << EOF
+        # MySQLコマンドで直接更新（SSL検証をスキップ）
+        mysql -h "$MYSQLHOST" -P "$MYSQLPORT" -u "$MYSQLUSER" -p"$MYSQLPASSWORD" "$MYSQLDATABASE" --ssl-mode=DISABLED << EOF
 UPDATE wp_options SET option_value = '$SITE_URL' WHERE option_name = 'siteurl';
 UPDATE wp_options SET option_value = '$SITE_URL' WHERE option_name = 'home';
 EOF
