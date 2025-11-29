@@ -34,15 +34,20 @@ if [ -f /var/www/html/wp-config.php ]; then
         SITE_URL="https://$RAILWAY_PUBLIC_DOMAIN"
         echo "Site URL will be: $SITE_URL"
         
-        # wp-config.phpの最初に設定を追加（既存の設定より優先）
-        if ! grep -q "RELOCATE" /var/www/html/wp-config.php; then
-            # <?php の直後に追加
-            sed -i "/<\?php/a\\
+        # 既存の定義を削除してから追加
+        sed -i "/define('RELOCATE'/d" /var/www/html/wp-config.php
+        sed -i "/define('WP_HOME'/d" /var/www/html/wp-config.php
+        sed -i "/define('WP_SITEURL'/d" /var/www/html/wp-config.php
+        sed -i "/define( 'RELOCATE'/d" /var/www/html/wp-config.php
+        sed -i "/define( 'WP_HOME'/d" /var/www/html/wp-config.php
+        sed -i "/define( 'WP_SITEURL'/d" /var/www/html/wp-config.php
+        
+        # <?php の直後に追加
+        sed -i "/<\?php/a\\
 define('RELOCATE', true);\\
 define('WP_HOME', '$SITE_URL');\\
 define('WP_SITEURL', '$SITE_URL');" /var/www/html/wp-config.php
-            echo "WordPress URLs forced to: $SITE_URL"
-        fi
+        echo "WordPress URLs forced to: $SITE_URL"
     fi
 else
     echo "WARNING: wp-config.php not found!"
