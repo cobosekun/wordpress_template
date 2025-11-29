@@ -29,25 +29,12 @@ if [ -f /var/www/html/wp-config.php ]; then
         echo "Required: MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE"
     fi
     
-    # WP_HOME と WP_SITEURL を強制設定（リダイレクトループ対策）
+    # WP_HOME と WP_SITEURL を環境変数で設定（wp-config.phpを直接編集しない）
     if [ ! -z "$RAILWAY_PUBLIC_DOMAIN" ]; then
         SITE_URL="https://$RAILWAY_PUBLIC_DOMAIN"
-        echo "Site URL will be: $SITE_URL"
-        
-        # 既存の定義を削除してから追加
-        sed -i "/define('RELOCATE'/d" /var/www/html/wp-config.php
-        sed -i "/define('WP_HOME'/d" /var/www/html/wp-config.php
-        sed -i "/define('WP_SITEURL'/d" /var/www/html/wp-config.php
-        sed -i "/define( 'RELOCATE'/d" /var/www/html/wp-config.php
-        sed -i "/define( 'WP_HOME'/d" /var/www/html/wp-config.php
-        sed -i "/define( 'WP_SITEURL'/d" /var/www/html/wp-config.php
-        
-        # <?php の直後に追加
-        sed -i "/<\?php/a\\
-define('RELOCATE', true);\\
-define('WP_HOME', '$SITE_URL');\\
-define('WP_SITEURL', '$SITE_URL');" /var/www/html/wp-config.php
-        echo "WordPress URLs forced to: $SITE_URL"
+        export WP_HOME="$SITE_URL"
+        export WP_SITEURL="$SITE_URL"
+        echo "WordPress URLs set via environment: $SITE_URL"
     fi
 else
     echo "WARNING: wp-config.php not found!"
