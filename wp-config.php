@@ -97,6 +97,12 @@ define('WP_HOME', 'https://kind-essence-production-0e51.up.railway.app');
 define('WP_SITEURL', 'https://kind-essence-production-0e51.up.railway.app');
 define('WP_CONTENT_URL', 'https://kind-essence-production-0e51.up.railway.app/wp-content');
 
+// Cookie settings for Railway
+define('COOKIE_DOMAIN', 'kind-essence-production-0e51.up.railway.app');
+define('ADMIN_COOKIE_PATH', '/');
+define('COOKIEPATH', '/');
+define('SITECOOKIEPATH', '/');
+
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */
