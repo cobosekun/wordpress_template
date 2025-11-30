@@ -1,0 +1,22 @@
+# WordPress core files (except specific files we need)
+*
+!.gitignore
+
+# Allow deployment and configuration files
+!Dockerfile
+!railway-entrypoint.sh
+!docker-compose.yml
+!docker-compose.local.yml
+!.dockerignore
+!railway.json
+!install-wordpress.sh
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
