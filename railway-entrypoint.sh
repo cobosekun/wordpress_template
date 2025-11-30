@@ -21,12 +21,16 @@ if [ -n "$RAILWAY_PUBLIC_DOMAIN" ]; then
   echo "Updating WordPress URLs in database..."
   SITE_URL="https://$RAILWAY_PUBLIC_DOMAIN"
   
-  mysql -h "$MYSQLHOST" -P "$MYSQLPORT" -u "$MYSQLUSER" -p"$MYSQLPASSWORD" "$MYSQLDATABASE" --skip-ssl <<-EOSQL
-    UPDATE wp_options SET option_value='$SITE_URL' WHERE option_name='siteurl';
-    UPDATE wp_options SET option_value='$SITE_URL' WHERE option_name='home';
+  # Check if wp_options table exists before updating
+  if mysql -h "$MYSQLHOST" -P "$MYSQLPORT" -u "$MYSQLUSER" -p"$MYSQLPASSWORD" "$MYSQLDATABASE" --skip-ssl -e "SHOW TABLES LIKE 'wp_options';" 2>/dev/null | grep -q wp_options; then
+    mysql -h "$MYSQLHOST" -P "$MYSQLPORT" -u "$MYSQLUSER" -p"$MYSQLPASSWORD" "$MYSQLDATABASE" --skip-ssl <<-EOSQL
+      UPDATE wp_options SET option_value='$SITE_URL' WHERE option_name='siteurl';
+      UPDATE wp_options SET option_value='$SITE_URL' WHERE option_name='home';
 EOSQL
-  
-  echo "WordPress URLs updated in database"
+    echo "WordPress URLs updated in database"
+  else
+    echo "WordPress not yet installed, skipping URL update"
+  fi
 fi
 
 # Configure Apache port (Railway uses PORT environment variable)
