@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+echo "=== Debug Info ==="
+echo "MYSQLHOST: ${MYSQLHOST:-NOT SET}"
+echo "MYSQLPORT: ${MYSQLPORT:-NOT SET}"
+echo "MYSQLUSER: ${MYSQLUSER:-NOT SET}"
+echo "MYSQLDATABASE: ${MYSQLDATABASE:-NOT SET}"
+echo "=================="
+
 # Wait for MySQL to be ready
 echo "Waiting for MySQL..."
 until mysql -h "$MYSQLHOST" -P "$MYSQLPORT" -u "$MYSQLUSER" -p"$MYSQLPASSWORD" --skip-ssl -e "SELECT 1" >/dev/null 2>&1; do
