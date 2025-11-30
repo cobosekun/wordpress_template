@@ -5,6 +5,9 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
+# Install PHP extensions required by WordPress
+RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable mysqli
+
 # Enable Apache modules
 RUN a2enmod rewrite headers
 
