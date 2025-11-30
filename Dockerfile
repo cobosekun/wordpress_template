@@ -8,15 +8,12 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache modules
 RUN a2enmod rewrite headers
 
-# Configure Apache to listen on PORT from Railway
-RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
-
 # Copy WordPress files
 COPY . /var/www/html/
 
-# Copy entrypoint script
-COPY railway-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/railway-entrypoint.sh
+# Copy and set up entrypoint script
+COPY railway-entrypoint.sh /railway-entrypoint.sh
+RUN chmod +x /railway-entrypoint.sh
 
 # Set working directory
 WORKDIR /var/www/html
@@ -24,9 +21,8 @@ WORKDIR /var/www/html
 # Set proper permissions
 RUN chown -R www-data:www-data /var/www/html
 
-# Expose port
-EXPOSE ${PORT}
+# Expose port (Railway will set this dynamically)
+EXPOSE 8080
 
-# Use custom entrypoint
-ENTRYPOINT ["/usr/local/bin/railway-entrypoint.sh"]
-CMD ["apache2-foreground"]
+# Start script
+CMD ["/bin/bash", "-c", "/railway-entrypoint.sh && apache2-foreground"]

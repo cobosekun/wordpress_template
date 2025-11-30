@@ -22,11 +22,10 @@ EOSQL
   echo "WordPress URLs updated in database"
 fi
 
-# Configure Apache port
-if [ -n "$PORT" ]; then
-  sed -i "s/Listen 80/Listen $PORT/g" /etc/apache2/ports.conf
-  sed -i "s/:80/:$PORT/g" /etc/apache2/sites-available/000-default.conf
-fi
+# Configure Apache port (Railway uses PORT environment variable)
+PORT=${PORT:-8080}
+echo "Configuring Apache to listen on port $PORT..."
+sed -i "s/Listen 80/Listen $PORT/g" /etc/apache2/ports.conf
+sed -i "s/:80/:$PORT/g" /etc/apache2/sites-available/000-default.conf
 
-# Execute the main command
-exec "$@"
+echo "Starting Apache..."
