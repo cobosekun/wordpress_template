@@ -14,6 +14,8 @@ COPY . /var/www/html/
 # Copy and set up entrypoint script
 COPY railway-entrypoint.sh /railway-entrypoint.sh
 RUN chmod +x /railway-entrypoint.sh
+# Create symlink for Railway's expected docker-entrypoint.sh
+RUN ln -s /railway-entrypoint.sh /docker-entrypoint.sh
 
 # Set working directory
 WORKDIR /var/www/html
